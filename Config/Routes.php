@@ -19,6 +19,9 @@ return array(
 
 	//Главная страница, просмотр последних добавленных товаров
 	'~^$~' => 'site/index', // actionIndex в SiteController
+	//Обратная связь
+	'~contacts~' => 'site/contacts', // actionContacts в SiteController
+
 	
     // Админка добавление нового товара
     '~admin/product/create~' => 'adminProduct/create',

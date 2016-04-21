@@ -30,6 +30,25 @@ class UserModel {
 		return $data;
 	}
 
+    public static function checkFormContacts () {
+        $error = array();
+        $feedback_user = $_POST['feedback_user'];
+        if (!self::checkEmail($feedback_user['email'])) {
+            $error[] = 'Неверный e-mail';
+        }
+        if (empty($feedback_user['subject']) || ($feedback_user['subject']!=preg_replace('/[\s]+/u', ' ', trim($feedback_user['subject'])))) {
+            $error[] = 'Неверная тема сообщения';
+            $feedback_user['subject'] = preg_replace('/[\s]+/u', ' ', trim($feedback_user['subject']));
+        }
+        if (empty($feedback_user['message']) || ($feedback_user['message']!=strip_tags(preg_replace('/[ \t]+/u', ' ', trim($feedback_user['message']))))) {
+            $error[] = 'Неверное сообщение';
+            $feedback_user['message'] = strip_tags(preg_replace('/[ \t]+/u', ' ', trim($feedback_user['message'])));
+        }
+        $data['error'] = $error;
+        $data['feedback_user'] = $feedback_user;
+        return $data;
+    }
+
     public static function checkFormLogin () {
         $error = array();
         $user = $_POST['user'];

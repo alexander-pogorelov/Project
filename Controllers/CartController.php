@@ -58,9 +58,9 @@ class CartController {
 			//echo "В корзине есть товары<br>";
 			$cartTotalAmount = CartModel::getCartTotalAmount (CartModel::getProductsFromCart());
 			if (isset($_SESSION['user'])) {
-                echo "Авторизованный пользователь<br>";
+                //echo "Авторизованный пользователь<br>";
             }else {
-                echo "Незарегистрированный пользователь<br>";
+                //echo "Незарегистрированный пользователь<br>";
             }
 		}else {
 			header('Location: /'); // Возвращаемся на главную страницу сайта

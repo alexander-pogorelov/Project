@@ -5,6 +5,7 @@
         <title>E-Shop</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="/Template/css/style.css">
+        <!--<link rel="shortcut icon" href="/Template/images/favicon.ico" type="image/png">-->
 	</head>
 
     <body>
@@ -39,13 +40,13 @@
             <ul id="menu">
                 <li><img src="/Template/images/li.gif" alt="" width="19" height="29"/></li>
                 <li><a href="/"><img src="/Template/images/but1_a.gif" alt="" width="90" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but2.gif" alt="" width="129" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but3.gif" alt="" width="127" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but4.gif" alt="" width="113" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but5.gif" alt="" width="132" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but6.gif" alt="" width="105" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but7.gif" alt="" width="82" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but8.gif" alt="" width="112" height="29"/></a></li>
-                <li><a href="index2.html"><img src="/Template/images/but9.gif" alt="" width="71" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but2.gif" alt="" width="129" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but3.gif" alt="" width="127" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but4.gif" alt="" width="113" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but5.gif" alt="" width="132" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but6.gif" alt="" width="105" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but7.gif" alt="" width="82" height="29"/></a></li>
+                <li><a href="/contacts"><img src="/Template/images/but8.gif" alt="" width="112" height="29"/></a></li>
+                <li><a href="/"><img src="/Template/images/but9.gif" alt="" width="71" height="29"/></a></li>
             </ul>
         </div>
