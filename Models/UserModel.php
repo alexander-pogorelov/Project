@@ -8,13 +8,9 @@ class UserModel {
 		//echo "<pre>";
         //print_r ($user);
         //echo "</pre>";
-		if (!empty($user['phone'])) {
-			//echo "Телефон есть<br>";
-			if (!self::checkPhone($user['phone'])) {
+
+        if (!self::checkPhone($user['phone'])) {
             $error[] = 'Неверный телефон';
-        }
-		} else {
-			//echo "Телефона нет<br>";
 		}
         if (!self::checkName($user['name'])) {
             $error[] = 'Неверное имя';
@@ -96,12 +92,12 @@ class UserModel {
 	}
 	
 	public static function checkEmailExists ($email) {
-	    echo $email.'<br>' ;
+	    //echo $email.'<br>' ;
 	    $db = Db::getConnection();
 	    $query_prep ="SELECT
 	    COUNT(*)
-	    FROM users
-	    WHERE users.email = :email
+	    FROM users_auth
+	    WHERE users_auth.email = :email
 	    ";
 	    $dbstmt = $db->prepare($query_prep); // подготавливаем запрос
 	    $dbstmt->execute(array('email' => $email));
@@ -119,13 +115,15 @@ class UserModel {
         //echo $email . '<br>';
         $db = Db::getConnection();
         $query_prep = "SELECT
-	    users.id_user,
-	    users.email,
-		users.phone,
-	    users.name,
-	    users.hash
-	    FROM users
-	    WHERE users.email = :email
+	    users_all.id_user,
+	    users_auth.email,
+		users_all.phone,
+	    users_all.name,
+	    users_auth.hash
+	    FROM users_all
+	    INNER JOIN users_auth
+		ON users_all.id_user = users_auth.id_user
+	    WHERE users_auth.email = :email
 	    ";
         $dbstmt = $db->prepare($query_prep); // подготавливаем запрос
         $dbstmt->execute(array('email' => $email)); // передаем данные и исполняем запрос,
@@ -146,67 +144,90 @@ class UserModel {
     }
 
     public static function addNewUser ($newUser) {
+        //Добавление данных пользователя в одну таблицу
         $hash = password_hash($newUser['password'], PASSWORD_BCRYPT);
         $db = Db::getConnection();
-        $query_prep ="INSERT INTO users
-		(name, email, hash, phone)
+        //Добавление данных пользователя в две таблицы
+        $db->beginTransaction();
+        $query_prep ="INSERT INTO users_all
+		(name, phone)
 		VALUES
-		(:name, :email, :hash, :phone)
+		(:name, :phone)
 		";
         $dbstmt = $db->prepare($query_prep);
         $dbstmt->bindValue(':name', $newUser['name'], PDO::PARAM_STR);
-        $dbstmt->bindValue(':email', $newUser['email'], PDO::PARAM_STR);
-		if (!empty($newUser['phone'])) { // если телефон ввели
-			$dbstmt->bindValue(':phone', $newUser['phone'], PDO::PARAM_INT); // определяем данные для ввода телефона
-		} else {
-			$dbstmt->bindValue(':phone', NULL, PDO::PARAM_STR); // Иначе присваиваем пустое значение
-		}		
-        $dbstmt->bindValue(':hash', $hash, PDO::PARAM_STR);
+        $dbstmt->bindValue(':phone', $newUser['phone'], PDO::PARAM_INT);
         if ($dbstmt->execute()) {
-            $db = NULL;  //Закрываем соединение
-            return TRUE;
+            $lastID = $db->lastInsertId();
+            $query_prep ="INSERT INTO users_auth
+		    (id_user, email, hash)
+		    VALUES
+		    (:id_user, :email, :hash)
+		    ";
+            $dbstmt = $db->prepare($query_prep);
+            $dbstmt->bindValue(':id_user', $lastID, PDO::PARAM_INT);
+            $dbstmt->bindValue(':email', $newUser['email'], PDO::PARAM_STR);
+            $dbstmt->bindValue(':hash', $hash, PDO::PARAM_STR);
+            if ($dbstmt->execute()) {
+                $db->commit();
+                $db = NULL;  //Закрываем соединение
+                return TRUE;
+            }else {
+                $db->rollBack();
+                throw new Exception('Ошибка добавления нового пользователя в таблицу users_auth');//генерируем исключение
+            }
         }
         else {
-            return FALSE;
+            throw new Exception('Ошибка добавления нового пользователя в таблицу users_all');//генерируем исключение
         }
-
     }
 	
 	public static function updateUser ($user) {
 		$db = Db::getConnection();
-		$query_prep ="UPDATE users
+        $db->beginTransaction();
+
+		$query_prep ="UPDATE users_all
 		SET
 			name = :name,
-			phone = :phone,
-			email = :email
+			phone = :phone
 		WHERE id_user = :id_user
 		";
 		$dbstmt = $db->prepare($query_prep);
-		$dbstmt->bindValue(':email', $user['email'], PDO::PARAM_STR);
 		$dbstmt->bindValue(':name', $user['name'], PDO::PARAM_STR);
-		if (!empty($user['phone'])) { // если телефон ввели
-			$dbstmt->bindValue(':phone', $user['phone'], PDO::PARAM_INT); // определяем данные для ввода телефона
-		} else {
-			$dbstmt->bindValue(':phone', NULL, PDO::PARAM_STR); // Иначе присваиваем пустое значение
-		}	
-		
+		$dbstmt->bindValue(':phone', $user['phone'], PDO::PARAM_INT); // определяем данные для ввода телефона
 		$dbstmt->bindValue(':id_user', $_SESSION['user']['id_user'], PDO::PARAM_INT);
+
 		if ($dbstmt->execute()) {
-            $db = NULL;  //Закрываем соединение
-			$_SESSION['user']['name'] = $user['name'];
-			$_SESSION['user']['email'] = $user['email'];
-			$_SESSION['user']['phone'] = $user['phone'];
-            return TRUE;
+            $query_prep ="UPDATE users_auth
+		    SET
+			email = :email
+		    WHERE id_user = :id_user
+		    ";
+            $dbstmt = $db->prepare($query_prep);
+            $dbstmt->bindValue(':email', $user['email'], PDO::PARAM_STR);
+            $dbstmt->bindValue(':id_user', $_SESSION['user']['id_user'], PDO::PARAM_INT);
+            if ($dbstmt->execute()) {
+                $db->commit();
+                $db = NULL;  //Закрываем соединение
+                $_SESSION['user']['name'] = $user['name'];
+                $_SESSION['user']['email'] = $user['email'];
+                $_SESSION['user']['phone'] = $user['phone'];
+                return TRUE;
+            } else {
+                $db->rollBack();
+                throw new Exception('Ошибка обновления данных пользователя в таблице users_auth');//генерируем исключение
+            }
         }
         else {
-            return FALSE;
+            throw new Exception('Ошибка обновления данных пользователя в таблице users_all');//генерируем исключение
+            //return FALSE;
         }		
 	}
 
-    public static function updatePassUser ($user) {
+    public static function updatePasswordUser ($user) {
         $hash = password_hash($user['password'], PASSWORD_BCRYPT);
         $db = Db::getConnection();
-        $query_prep ="UPDATE users
+        $query_prep ="UPDATE users_auth
 		SET
 			hash = :hash
 		WHERE id_user = :id_user
@@ -222,7 +243,6 @@ class UserModel {
             $db = NULL;  //Закрываем соединение
             return FALSE;
         }
-
     }
 	
 

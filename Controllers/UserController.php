@@ -24,9 +24,8 @@ class UserController {
                     $data['error'][] = 'Такой e-mail уже существует';
 				}else {
 					//echo "Такой e-mail встречается впервые<br>";
-                    if ($result = UserModel::addNewUser($data['user'])) {
+                    if (!$result = UserModel::addNewUser($data['user'])) {
                         //echo "Новый пользователь успешно добавлен<br>";
-                    }else {
                         throw new Exception('Ошибка добавления нового пользователя в БД');//генерируем исключение
                     }
 				}					

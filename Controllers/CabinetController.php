@@ -59,7 +59,7 @@ class CabinetController {
                 $data = UserModel::checkFormPass();
                 if (empty($data['error'])) {
                     //echo "Ошибок в форме нету<br>";
-                    if ($result = UserModel::updatePassUser($data['user'])) {
+                    if ($result = UserModel::updatePasswordUser($data['user'])) {
                         //echo "Изменения успешно внесены<br>";
                     } else {
                         throw new Exception('Ошибка смены пароля пользователя в БД');//генерируем исключение
