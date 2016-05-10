@@ -10,7 +10,7 @@
             <ul>
                 <li><a href="/cabinet/edit">Редактировать данные</a></li>
 				<li><a href="/cabinet/pass">Сменить пароль</a></li>
-				<li><a href="#">Список покупок</a></li>
+				<li><a href="/cabinet/orders">Список заказов</a></li>
             </ul>
 		</div>
 	</div>	

@@ -2,10 +2,15 @@
 
 //define('HOST', $_SERVER['HTTP_HOST']);
 define('HOST', 'localhost');
+define('ENCODING', 'utf8');
+define('USER', 'root');
+define('PASSWORD', 'root');
+define('DATABASE', 'alex_project');
+/*
 define('USER', 'alexp_root');
 define('PASSWORD', 'Warrenton2');
 define('DATABASE', 'alexproj_db');
-define('ENCODING', 'utf8');
+*/
 
 
 define ('LAST_PRODUCTS_PER_PAGE',4);

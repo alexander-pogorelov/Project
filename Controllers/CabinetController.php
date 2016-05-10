@@ -70,4 +70,34 @@ class CabinetController {
         }
 		return true;
 	}
+
+    public static function actionOrders () {
+        $result = false;
+        //echo "Работает CabinetController<br>";
+        //echo "Вызван метод actionOrders<br>";
+        if (UserModel::checkAuthenticatedSession()) {
+            $result = OrderModel::getUserOrdersByID($_SESSION['user']['id_user']);
+
+            require_once(ROOT . '/Views/Cabinet/orders.php');
+        }
+        return true;
+    }
+
+    public static function actionOrder ($id) {
+        //echo "Работает CabinetController<br>";
+        //echo "Вызван метод actionView<br>";
+        //echo $id;
+        if (UserModel::checkAuthenticatedSession()){
+            $result = OrderModel::getUserOrder($id);
+            if (empty($result)) {
+                header("Location: /cabinet/orders");
+                exit;
+            }
+            //echo "<pre>";
+            //print_r ($result);
+            //echo "</pre>";
+            require_once(ROOT . '/Views/Cabinet/ViewOrder.php');
+        }
+        return true;
+    }
 }

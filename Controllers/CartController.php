@@ -11,7 +11,7 @@ class CartController {
     public function actionAdd ($id) {
 		CartModel::addProductToCart ($id); // Добавляем товар в корзину сессии
 		header('Location: ' . $_SERVER['HTTP_REFERER']); // Возвращаемся на исходную страницу сайта
-		exit;
+		//exit;
         return true;
     }
 	
@@ -45,29 +45,36 @@ class CartController {
 		header('Location: ' . $_SERVER['HTTP_REFERER']); // Возвращаемся на исходную страницу сайта
 		return true;
 	}
-	
-	public function actionCheckout () {
-		$categoryId=0;
-		// Получение списка меню категорий
-		$categories = CategoryModel::getCategoriesList();
-		//echo "Работает CartController<br>";
+
+    public function actionCheckout() {
+        $data['error']=array();
+        $result = false;
+        $categoryId = 0;
+        // Получение списка меню категорий
+        $categories = CategoryModel::getCategoriesList();
+        //echo "Работает CartController<br>";
         //echo "Вызван метод actionCheckout<br>";
-		$countItemsInCart=CartModel::getCountItemsInCart();
-		
-		if ($countItemsInCart > 0) {
-			//echo "В корзине есть товары<br>";
-			$cartTotalAmount = CartModel::getCartTotalAmount (CartModel::getProductsFromCart());
-			if (isset($_SESSION['user'])) {
-                //echo "Авторизованный пользователь<br>";
-            }else {
-                //echo "Незарегистрированный пользователь<br>";
+        $countItemsInCart = CartModel::getCountItemsInCart();
+        if ($countItemsInCart > 0) {
+            $cartTotalAmount = CartModel::getCartTotalAmount(CartModel::getProductsFromCart());
+        } else {
+            header('Location: /'); // Возвращаемся на главную страницу сайта
+            exit;
+        }
+        if (isset ($_POST['order_button'])) {
+            //echo "Нажата кнопка<br>";
+            //echo mb_strlen('ф').'<hr>';
+            //echo mb_strlen('a').'<hr>';
+            $data = CartModel::checkFormOrder();
+            if (count($data['error']) == 0) {
+                //echo "Ошибок нет<br>";
+                if (!$result = CartModel::addNewOrder($data['order'])) {
+                    throw new Exception('Ошибка добавления нового заказа в БД');//генерируем исключение
+                }
             }
-		}else {
-			header('Location: /'); // Возвращаемся на главную страницу сайта
-		}
-		
-		require_once (ROOT. '/Views/Cart/checkout.php');
-		return true;
-	}
+        }
+        require_once(ROOT . '/Views/Cart/checkout.php');
+        return true;
+    }
 
 }

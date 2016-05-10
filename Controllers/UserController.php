@@ -50,6 +50,7 @@ class UserController {
             if (empty($data['error'])) {
                 //echo "Ошибок в форме нету<br>";
                     if ($user = UserModel::checkUserData($data['user']['email'], $data['user']['password'])) {
+                        //echo '$user'.$user."<br>";
                         UserModel::startAuthenticatedSession($user);
 
                             header("Location: /");

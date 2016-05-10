@@ -63,11 +63,9 @@ class UserModel {
 	public static function checkFormEdit () {
 		$error = array();
         $user = $_POST['user'];
-		if (!empty($user['phone'])) {
-			//echo "Телефон есть<br>";
-			if (!self::checkPhone($user['phone'])) {
+
+        if (!self::checkPhone($user['phone'])) {
             $error[] = 'Неверный телефон';
-			}
         }
 		if (!self::checkName($user['name'])) {
             $error[] = 'Неверное имя';
@@ -306,11 +304,13 @@ class UserModel {
 	}
 
 	public static function checkPhone ($phone) {
-		 if ((mb_strlen($phone) >= PHONE_MIN) && (preg_match('/^[\d]{9}$/u', trim($phone))==1) && $phone==trim($phone)) {
+		 if ((mb_strlen($phone) >= PHONE_MIN) && (preg_match('/^[\d]{9,}$/u', trim($phone))==1) && $phone==trim($phone)) {
             return true;
         }else {
             return false;
         }
 	}
+
+
 	
 }

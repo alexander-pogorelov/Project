@@ -2,8 +2,6 @@
 // Массив с маршрутами
 return array(
 
-
-
 	//Просмотр конкретного товара по id
 	'~product/([0-9]+)~' => 'product/view/$1', // actionView в ProductController
 	
@@ -12,16 +10,11 @@ return array(
 
 	// Просмотр товаров по категории
 	'~category/([0-9]+)~' => 'site/index/$1', // actionIndex в SiteController с категорией товара
-	
-	
-	
-	
 
 	//Главная страница, просмотр последних добавленных товаров
 	'~^$~' => 'site/index', // actionIndex в SiteController
 	//Обратная связь
 	'~contacts~' => 'site/contacts', // actionContacts в SiteController
-
 	
     // Админка добавление нового товара
     '~admin/product/create~' => 'adminProduct/create',
@@ -68,15 +61,15 @@ return array(
 	'~cabinet/edit~' => 'cabinet/edit', // actionEdit в CabinetController
 	// Смена пароля пользователя
 	'~cabinet/pass~' => 'cabinet/pass', // actionPass в CabinetController
-	
+    // Просмотр заказа пользователем
+    '~cabinet/order/([0-9]+)~' => 'cabinet/order/$1', // actionOrder в CabinetController
+	// Просмотр заказов пользователя
+	'~cabinet/orders~' => 'cabinet/orders', // actionOrders в CabinetController
 		// Личный кабинет пользователя
 	'~cabinet~' => 'cabinet/index', // actionIndex в CabinetController
 	
     // Админка главная страница
 	'~admin~' => 'admin/index', // actionIndex в AdminController
-
-
-
 
 );
 
