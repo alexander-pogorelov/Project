@@ -121,6 +121,7 @@ class CartModel {
 		$db = Db::getConnection();
 		$db->beginTransaction();
 		if (UserModel::checkGuest()) { // Если гость - будем добавлять данные клиента в БД
+
 			$query_prep ="INSERT INTO users_all
 				(name, phone)
 				VALUES
@@ -136,7 +137,7 @@ class CartModel {
 			}
 		} else {
 			$idUser = $_SESSION['user']['id_user']; // Если клиент авторизован - получаем его ID
-            echo '<br>'.$idUser.'<br>';
+            //echo '<br>'.$idUser.'<br>';
 		}
         $query_prep ="INSERT INTO orders
 				(id_user, comment)

@@ -42,6 +42,12 @@ return array(
     '~admin/category~' => 'adminCategory/index', // actionIndex в AdminCategoryController
 	//Админка список производителей
 	'~admin/brand~' => 'adminBrand/index', // actionIndex в AdminBrandController
+	//Админка удаление заказов
+	'~admin/orders/delete/([0-9]+)~' => 'adminOrders/delete/$1', // actionDelete в AdminOrdersController
+    //Админка список заказов
+    '~admin/orders/page=([0-9]+)~' => 'adminOrders/index/$1', // actionIndex в AdminOrdersController
+    //Админка список заказов
+    '~admin/orders~' => 'adminOrders/index', // actionIndex в AdminOrdersController
 	// Регистрация пользователей
 	'~user/registration~' => 'user/registration', // actionRegistration в UserController
 	// Авторизация на сайте

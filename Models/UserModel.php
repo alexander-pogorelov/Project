@@ -274,6 +274,33 @@ class UserModel {
 			return true;
 		}		
 	}
+
+    public static function checkAdmin () {
+        if ($idUser = $_SESSION['user']['id_user']) {
+            $db = Db::getConnection();
+            $query = "SELECT
+                user_status.status
+                FROM users_auth
+                INNER JOIN user_status
+                ON users_auth.status = user_status.id_status
+                WHERE users_auth.id_user = $idUser
+            ";
+            $dbstmt = $db->query($query);
+            $result = $dbstmt->fetchColumn();
+            $db = NULL;  //Закрываем соединение
+            if ($result == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkAuthUser ($idUser) {
+
+    }
 	
 	
     // Разрешаем только буквы, цифры, знак подчеркивания, пробелы

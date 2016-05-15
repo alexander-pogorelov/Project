@@ -6,18 +6,31 @@
  * Date: 07.03.2016
  * Time: 13:32
  */
-class AdminProductController {
+class AdminProductController extends Admin {
 
     public function actionIndex ($pageNumber=1) {
 
         //echo "Работает AdminProductController<br>";
         //echo "Вызван метод actionIndex<br>";
+        $pageNumber = intval($pageNumber);
+        // Получение общего количества страниц товаров по категории для пагинации
+        $pagesAmount = ProductModel::getAdminPagesAmount($categoryId=0);
+        if ($pageNumber > $pagesAmount) {
+            $pageNumber = $pagesAmount;
+        }
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
 
         $productsList = ProductModel::getAdminProductList($categoryId=0,$pageNumber);
 
-        // Получение общего количества товаров по категории для пагинации
-        $pagesAmount = ProductModel::getAdminPagesAmount($categoryId=0);
+
+
         //echo 'Всего товаров в категории: '.$productAmount;
+
+
+        //echo 'Страница пагинации: '.$pagesAmount.'<br>';
+        //exit;
         //Запускаем пагинацию
         $pagination = new PaginationUri($pageNumber, $pagesAmount, 'page=');
         $pagination->run();

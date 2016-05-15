@@ -1,7 +1,7 @@
 <?php
 
 
-class AdminCategoryController {
+class AdminCategoryController extends Admin {
 
     public function actionIndex () {
         //echo "Работает AdminCategoryController<br>";

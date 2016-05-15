@@ -3,9 +3,9 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-//ini_set('default_charset', 'UTF-8');
-//ini_set('mbstring.func_overload', 0);
-//ini_set('mbstring.internal_encoding', 'UTF-8');
+ini_set('default_charset', 'UTF-8');
+ini_set('mbstring.func_overload', 0);
+ini_set('mbstring.internal_encoding', 'UTF-8');
 
 
 

@@ -76,7 +76,7 @@ class CabinetController {
         //echo "Работает CabinetController<br>";
         //echo "Вызван метод actionOrders<br>";
         if (UserModel::checkAuthenticatedSession()) {
-            $result = OrderModel::getUserOrdersByID($_SESSION['user']['id_user']);
+            $result = OrderModel::getUserOrdersByIdUser($_SESSION['user']['id_user']);
 
             require_once(ROOT . '/Views/Cabinet/orders.php');
         }
@@ -88,7 +88,7 @@ class CabinetController {
         //echo "Вызван метод actionView<br>";
         //echo $id;
         if (UserModel::checkAuthenticatedSession()){
-            $result = OrderModel::getUserOrder($id);
+            $result = OrderModel::getAuthUserOrderByIdOrder($id);
             if (empty($result)) {
                 header("Location: /cabinet/orders");
                 exit;

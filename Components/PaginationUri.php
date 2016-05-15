@@ -18,7 +18,8 @@ class PaginationUri {
 		$currentURI = rtrim($_SERVER['REQUEST_URI'], '/');
 		//echo "URI:$currentURI<br>";
 
-		$pattern = '~/' . $this->index . '[0-9]+~';
+		//$pattern = '~/' . $this->index . '[0-9]+~';
+        $pattern = '~/' . $this->index.'.*~';
         //echo "Patern: $pattern<br>";
 		$currentURI = preg_replace($pattern, '', $currentURI) . '/';
         //echo "New URI: $currentURI<br>";

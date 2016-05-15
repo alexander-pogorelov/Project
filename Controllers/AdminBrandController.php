@@ -6,7 +6,7 @@
  * Date: 10.03.2016
  * Time: 21:39
  */
-class AdminBrandController {
+class AdminBrandController extends Admin {
 
     public function actionIndex () {
         //echo "Работает AdminBrandController<br>";
