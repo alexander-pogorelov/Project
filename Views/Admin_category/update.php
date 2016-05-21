@@ -28,7 +28,7 @@
 
                     <div class="">
                         <div class="form">
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form action="#" method="post">
 
 
                                 <p>Категория</p>

@@ -13,14 +13,15 @@ class AdminProductController extends Admin {
         //echo "Работает AdminProductController<br>";
         //echo "Вызван метод actionIndex<br>";
         $pageNumber = intval($pageNumber);
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
         // Получение общего количества страниц товаров по категории для пагинации
         $pagesAmount = ProductModel::getAdminPagesAmount($categoryId=0);
         if ($pageNumber > $pagesAmount) {
             $pageNumber = $pagesAmount;
         }
-        if ($pageNumber < 1) {
-            $pageNumber = 1;
-        }
+
 
         $productsList = ProductModel::getAdminProductList($categoryId=0,$pageNumber);
 

@@ -12,13 +12,14 @@ class AdminOrdersController extends Admin {
         //echo "Работает AdminOrdersController<br>";
         //echo "Вызван метод actionIndex<br>";
         $pageNumber = intval($pageNumber);
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
         $pagesAmount = OrderModel::getAdminOrdersPageAmount(); // Получаем общее количество заказов
         if ($pageNumber > $pagesAmount) {
             $pageNumber = $pagesAmount;
         }
-        if ($pageNumber < 1) {
-            $pageNumber = 1;
-        }
+
         //echo "$pageNumber<br>";
         //exit;
         $ordersList = OrderModel::getAdminOrdersList($pageNumber); // получаем список заказов с учетом пагинации
@@ -37,25 +38,9 @@ class AdminOrdersController extends Admin {
 
     public static function actionDelete ($idOrder) {
         $idOrder = intval($idOrder);
-        echo "Работает AdminOrdersController<br>";
-        echo "Вызван метод actionDelete<br>";
+        //echo "Работает AdminOrdersController<br>";
+        //echo "Вызван метод actionDelete<br>";
         if (isset ($_POST['deleteOrderButton'])) {
-            /*
-            ///////////////////////////////////////////////////////////////////////
-            $userData = OrderModel::checkAuthUserByIdOrder($idOrder);
-            echo "<pre>";
-            print_r ($userData);
-            echo "</pre>";
-            echo 'Значение элемента массива: '.current($userData).'<br>';
-            echo 'Значение ключа массива: '.key($userData).'<br>';
-
-            if (!current($userData)) {
-                echo "E-mail отсутствует";
-            }
-            exit('Останов в AdminOrdersController');
-            ///////////////////////////////////////////////////////////////////////
-            */
-
             //echo "Нажата кнопка";
             if (OrderModel::deleteOrderById($idOrder)) {
                 header ("Location: /admin/orders"); // Нужен ли полный путь для header????
@@ -65,6 +50,50 @@ class AdminOrdersController extends Admin {
             }
         }
         require_once (ROOT. '/Views/Admin_orders/delete.php');
+        return true;
+    }
+
+    public static function actionView ($idOrder) {
+        //echo "Работает AdminOrdersController<br>";
+        //echo "Вызван метод actionView<br>";
+        $idOrder = intval($idOrder);
+        //echo 'ID заказа: '.$idOrder.'<br>';
+        $orderAndUserInfo = OrderModel::getUserAndOrderInfoByIdOrder($idOrder);
+        $productsInOrder = OrderModel::getProductsByIdOrder($idOrder);
+        //echo "<pre>";
+        //print_r ($orderAndUserInfo);
+        //echo "</pre>";
+        require_once (ROOT. '/Views/Admin_orders/view.php');
+        return true;
+    }
+
+    public static function actionUpdate ($idOrder) {
+        //echo "Работает AdminOrdersController<br>";
+        //echo "Вызван метод actionUpdate<br>";
+        //echo 'ID заказа: '.$idOrder.'<br>';
+        $idOrder = intval($idOrder);
+        $orderAndUserInfo = OrderModel::getUserAndOrderInfoByIdOrder($idOrder);
+        $productsInOrder = OrderModel::getProductsByIdOrder($idOrder);
+        $orderStatusList = OrderModel::getOrderStatusList();
+
+        if (isset ($_POST['orderUpdate'])) {
+            //echo "Нажата кнопка";
+            //$temp = OrderModel::updateOrderAndUserInfoByIdOrder($idOrder);
+            //echo "<pre>";
+            //print_r ($temp);
+            //echo "</pre>";
+            //echo '<br>ID User: '.OrderModel::getIdUserByIdOrder($idOrder);
+            //exit;
+
+            if (OrderModel::updateOrderAndUserInfoByIdOrder($idOrder)) {
+                header ('Location: /admin/orders/view/'.$idOrder); // Нужен ли полный путь для header????
+                exit;
+            }else {
+                throw new Exception('Ошибка обновления заказа в БД');//генерируем исключение
+            }
+
+        }
+        require_once (ROOT. '/Views/Admin_orders/update.php');
         return true;
     }
 }

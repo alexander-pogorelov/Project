@@ -39,14 +39,14 @@
                     </tr>
                     <?php foreach ($ordersList as $order): ?>
                         <tr>
-                            <td><?php echo $order['id_orders']; ?></td>
+                            <td><a href="/admin/orders/view/<?php echo $order['id_orders']; ?>"><?php echo $order['id_orders']; ?></a></td>
                             <td><?php echo $order['date_order']; ?></td>
                             <td><?php echo $order['name']; ?></td>
                             <td><?php echo(empty($order['email']))? '-' : '+';?></td>
                             <td><?php echo number_format(OrderModel::getTotalAmountOrderByID($order['id_orders']), 0, '', '&nbsp');?></td>
                             <td><?php echo $order['status'] ?></td>
-                            <td>View</td>
-                            <td>Update</td>
+                            <td><a href="/admin/orders/view/<?php echo $order['id_orders']; ?>">View</a></td>
+                            <td><a href="/admin/orders/update/<?php echo $order['id_orders']; ?>">Update</a></td>
                             <td><a href="/admin/orders/delete/<?php echo $order['id_orders']; ?>">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>

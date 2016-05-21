@@ -4,6 +4,10 @@ class SiteController {
 	public function actionIndex ($categoryId=0, $pageNumber=1) {
 		$categories = array ();
 		$latestProducts = array ();
+        $pageNumber = intval($pageNumber);
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
 		//echo "Работает SiteController<br>";
 		//echo "Вызван метод actionIndex<br>";
 		//echo "Категория: $categoryId<br>";
@@ -19,6 +23,13 @@ class SiteController {
 
         // Получение количества страниц товаров по категории для пагинации
         $pagesAmount = ProductModel::getPagesAmount($categoryId);
+        if ($pageNumber > $pagesAmount) {
+            $pageNumber = $pagesAmount;
+        }
+
+        //echo "Общее число страниц: $pagesAmount<br>";
+        //echo "Выбрана страница: $pageNumber<br>";
+
         //echo 'Всего товаров в категории: '.$productAmount;
         //Запускаем пагинацию
         $pagination = new PaginationUri($pageNumber, $pagesAmount, 'page=');
@@ -57,6 +68,13 @@ class SiteController {
         require_once (ROOT. '/Views/Site/contacts.php');
         return true;
 	}
+
+    public static function error404 () {
+        $categoryId=0;
+        $categories = CategoryModel::getCategoriesList();
+        require_once (ROOT. '/Views/Site/error404.php');
+        return true;
+    }
 }
 
 ?>

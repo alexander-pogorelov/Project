@@ -6,11 +6,12 @@
         <title>Изменение товара</title>
     </head>
     <body>
-        <section>
+
             <div class="container">
                 <div class="row">
 
                     <br/>
+
 
                     <div class="">
                         <ol class="">
@@ -109,7 +110,7 @@
 
                 </div>
             </div>
-        </section>
+
     </body>
 </html>
 

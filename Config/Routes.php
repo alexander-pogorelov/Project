@@ -44,6 +44,10 @@ return array(
 	'~admin/brand~' => 'adminBrand/index', // actionIndex в AdminBrandController
 	//Админка удаление заказов
 	'~admin/orders/delete/([0-9]+)~' => 'adminOrders/delete/$1', // actionDelete в AdminOrdersController
+	//Админка просмотр заказа
+	'~admin/orders/view/([0-9]+)~' => 'adminOrders/view/$1', // actionView в AdminOrdersController
+	//Админка изменение заказа
+	'~admin/orders/update/([0-9]+)~' => 'adminOrders/update/$1', // actionUpdate в AdminOrdersController
     //Админка список заказов
     '~admin/orders/page=([0-9]+)~' => 'adminOrders/index/$1', // actionIndex в AdminOrdersController
     //Админка список заказов
@@ -75,7 +79,7 @@ return array(
 	'~cabinet~' => 'cabinet/index', // actionIndex в CabinetController
 	
     // Админка главная страница
-	'~admin~' => 'admin/index', // actionIndex в AdminController
+	'~admin~' => 'admin/index' // actionIndex в AdminController
 
 );
 

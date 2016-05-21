@@ -17,7 +17,7 @@ define('DATABASE', 'alexproj_db');
 
 define ('LAST_PRODUCTS_PER_PAGE',4);
 define ('PRODUCTS_PER_PAGE',6);
-define ('ADMIN_PRODUCTS_PER_PAGE',10);
+define ('ADMIN_PRODUCTS_PER_PAGE',8);
 define ('ADMIN_ORDERS_PER_PAGE',4);
 
 define ('PAGINATION_INDENT',2);

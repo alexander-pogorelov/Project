@@ -149,9 +149,10 @@ class CategoryModel {
 
     public static function updateCategoryById ($categoryId) {
         $updateCategory = $_POST['newCategory'];
-        echo "<pre>";
-        print_r ($updateCategory);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r ($updateCategory);
+        //echo "</pre>";
+		//exit;
 
         $db = Db::getConnection();
         $query_prep ="UPDATE product_categories
@@ -159,7 +160,7 @@ class CategoryModel {
 			category = :category,
 			singular_category = :singular_category,
 			category_sort = :category_sort,
-			category_arh = :category_arh
+			ategory_arh = :category_arh
 		WHERE id_category = :id_category
 		";
         $dbstmt = $db->prepare($query_prep);

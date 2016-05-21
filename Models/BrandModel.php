@@ -103,9 +103,9 @@ class BrandModel {
 
     public static function updateBrandById ($brandId) {
         $updateBrand = $_POST['newBrand'];
-        echo "<pre>";
-        print_r ($updateBrand);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r ($updateBrand);
+        //echo "</pre>";
 
         $db = Db::getConnection();
         $query_prep ="UPDATE brands
