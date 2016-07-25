@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>E-Shop</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" type="text/css" href="/Template/css/style.css">
         <!--<link rel="shortcut icon" href="/Template/images/favicon.ico" type="image/png">-->
+        <script src="/Template/js/Cart.js"></script>
 	</head>
 
     <body>
@@ -35,7 +35,7 @@
 
                 <p>Shopping cart</p>
 
-                <p><strong><?php echo CartModel::getCountItemsInCart(); ?></strong> <span>items</span></p>
+                <p><strong id="totalproducts"><?php echo CartModel::getCountItemsInCart();?></strong> <span>items</span></p>
             </div>
             <ul id="menu">
                 <li><img src="/Template/images/li.gif" alt="" width="19" height="29"/></li>

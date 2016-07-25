@@ -18,6 +18,7 @@ class OrderModel {
         	INNER JOIN order_status
 			ON orders.status = order_status.id_status
         	WHERE orders.id_user = :id
+        	ORDER BY orders.id_orders DESC
         ";
         $dbstmt = $db->prepare($query_prep);
         $dbstmt->execute(array('id' => $id)); // передаем данные

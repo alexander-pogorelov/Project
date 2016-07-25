@@ -29,7 +29,7 @@ class Router {
 			foreach ($this->routes as $uriPattern => $path) {
 				//echo "Маршрут ($uriPattern) => $path<br>";
 				//echo 'Итерация: '.$i.'<br>';
-				//$uriPattern='~'.$uriPattern.'~';
+				$uriPattern='~^'.$uriPattern.'$~';
 				if (preg_match($uriPattern, $uri)){// СОВПАДЕНИЕ ТАКЖЕ  НАХОДИТСЯ, ЕСЛИ КЛЮЧЕВОЕ СЛОВО НАДОДИТСЯ НЕ СНАЧАЛА URI
 					//echo "Совпадение!<hr>";
 					// получаем внутренний маршрут вида контроллер/экшен/параметры

@@ -14,6 +14,13 @@ class CartController {
 		//exit;
         return true;
     }
+    public function actionAddAjax ($idProduct) {
+        CartModel::addProductToCart ($idProduct); // Добавляем товар в корзину сессии
+        //echo "Товар добавлен в корзину";
+        //echo CartModel::getCountItemsInCart();
+        echo json_encode (CartModel::getAjaxData($idProduct));
+        return true;
+    }
 	
 	public function actionIndex () {
         $categoryId=0;
@@ -45,6 +52,15 @@ class CartController {
 		header('Location: ' . $_SERVER['HTTP_REFERER']); // Возвращаемся на исходную страницу сайта
 		return true;
 	}
+    public function actionDelAjax ($idProduct) {// удаление товара из корзины
+        unset ($_SESSION['cart'][$idProduct]);
+        echo json_encode (CartModel::getAjaxData($idProduct));
+        //echo "<pre>";
+        //print_r (CartModel::getAjaxData($idProduct));
+        //echo "<pre>";
+        return true;
+    }
+
 
     public function actionCheckout() {
         $data['error']=array();
@@ -74,6 +90,30 @@ class CartController {
             }
         }
         require_once(ROOT . '/Views/Cart/checkout.php');
+        return true;
+    }
+
+    public static function actionMinus ($idProduct) {
+        //echo "Работает CartController<br>";
+        //echo "Вызван метод actionMinus<br>";
+        CartModel::decrementProductInCart($idProduct);
+        header('Location: /cart');
+        return true;
+    }
+/*
+    public static function actionPlus ($idProduct) {
+        //echo "Работает CartController<br>";
+        //echo "Вызван метод actionPlus<br>";
+        CartModel::incrementProductInCart($idProduct);
+        header('Location: /cart');
+        return true;
+    }
+*/
+    public static function actionMinusAjax ($idProduct) {
+        CartModel::decrementProductInCart($idProduct);
+        // echo CartModel::getCountItemsInCart();
+        //echo json_encode ($_SESSION['cart']);
+        echo json_encode (CartModel::getAjaxData($idProduct));
         return true;
     }
 

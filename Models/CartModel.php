@@ -21,17 +21,53 @@ class CartModel {
         //print_r ($_SESSION['cart']);
         //echo "</pre>";	
 	}
-	
+
+    public static function decrementProductInCart ($idProduct) {
+        $productsInCart = array (); // массив товаров в корзине
+        $idProduct = intval($idProduct);
+        if (isset($_SESSION['cart'])) { // если в корзине сессии уже есть товары
+            //echo "Сессия уже существует<br>";
+            $productsInCart = $_SESSION['cart']; // сохраняем товары из корзины в переменной
+            if (array_key_exists ($idProduct, $productsInCart)) { // если товар уже есть в корзине
+                //echo "Такой товар уже есть в корзине<br>";
+                $productsInCart[$idProduct]--; // уменьшаем его количество на единицу
+                if ($productsInCart[$idProduct] < 1) {
+                    $productsInCart[$idProduct] = 1; // иначе количество товара равно единице
+                }
+                $_SESSION['cart'] = $productsInCart; // обновляем корзину сессии
+            }
+        }
+    }
+/*
+    public static function incrementProductInCart ($idProduct) {
+        $productsInCart = array (); // массив товаров в корзине
+        $idProduct = intval($idProduct);
+        if (isset($_SESSION['cart'])) { // если в корзине сессии уже есть товары
+            //echo "Сессия уже существует<br>";
+            $productsInCart = $_SESSION['cart']; // сохраняем товары из корзины в переменной
+            if (array_key_exists ($idProduct, $productsInCart)) { // если товар уже есть в корзине
+                //echo "Такой товар уже есть в корзине<br>";
+                $productsInCart[$idProduct]++; // увеличиваем его количество на единицу
+                $_SESSION['cart'] = $productsInCart; // обновляем корзину сессии
+            }
+        }
+    }
+*/
 	public static function getCountItemsInCart () {
 		$totalProducts = 0;
 		if (isset($_SESSION['cart'])) {
 			$totalProducts = array_sum ($_SESSION['cart']);			
 		}
+        // echo $totalProducts;
+        // echo "<hr>";
 		return $totalProducts;
 	}
 
 	public static function getProductsFromCart () {
-        if (isset($_SESSION['cart'])) {
+        //echo "<pre>";
+        //print_r ($_SESSION['cart']);
+        //echo "</pre>";
+        if (!empty($_SESSION['cart'])) {
             $idItemsInCart = implode(',', array_keys($_SESSION['cart']));
 			//$idItemsInCart = "";
             //echo "<pre>";
@@ -89,12 +125,15 @@ class CartModel {
     }
 	
 	public static function getCartTotalAmount ($cartProducts) {
+
 		$cartTotalAmount = 0;
 		//$cartProducts = self::getProductsFromCart();
-		foreach ($cartProducts as $product) {
-			$cartTotalAmount = $cartTotalAmount + $product['price']*$_SESSION['cart'][$product['id_product']];
-		}
-		//echo $cartTotalAmount.'<br>';
+        if ($cartProducts) {
+            foreach ($cartProducts as $product) {
+                $cartTotalAmount = $cartTotalAmount + $product['price']*$_SESSION['cart'][$product['id_product']];
+            }
+        }
+		//echo $cartTotalAmount.'<hr>';
 		return $cartTotalAmount;
 	}
 
@@ -176,6 +215,15 @@ class CartModel {
             throw new Exception('Ошибка регистрации заказа: невозможно добавить новый заказ в таблицу orders');//генерируем исключение
         }
 	}
+
+    public static function getAjaxData($idProduct) {
+        return array (
+            self::getCountItemsInCart(), // Количество товаров в корзине
+            number_format(self::getCartTotalAmount(self::getProductsFromCart()), 0, '', '&nbsp'), // Общая сумма товаров в корзине
+            (isset ($_SESSION['cart'][$idProduct]))? $_SESSION['cart'][$idProduct]: "", // Количество конкретного товара в корзине по ID товара
+            (isset ($_SESSION['cart'][$idProduct]))? number_format(ProductModel::getProductItemById($idProduct)['price']*$_SESSION['cart'][$idProduct], 0, '', '&nbsp'): "" // Сумма конкретного товара в корзине по ID
+        );
+    }
 
 
 

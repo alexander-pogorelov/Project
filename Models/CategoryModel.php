@@ -33,7 +33,7 @@ class CategoryModel {
 			product_categories.singular_category,
 			product_categories.category
 			FROM product_categories
-			ORDER BY product_categories.category";
+			ORDER BY product_categories.category_sort";
 		$result = $db->query($query);
 		$i=0;
 		while ($row = $result->fetch()){
@@ -149,18 +149,13 @@ class CategoryModel {
 
     public static function updateCategoryById ($categoryId) {
         $updateCategory = $_POST['newCategory'];
-        //echo "<pre>";
-        //print_r ($updateCategory);
-        //echo "</pre>";
-		//exit;
-
         $db = Db::getConnection();
         $query_prep ="UPDATE product_categories
 		SET
 			category = :category,
 			singular_category = :singular_category,
 			category_sort = :category_sort,
-			ategory_arh = :category_arh
+			category_arh = :category_arh
 		WHERE id_category = :id_category
 		";
         $dbstmt = $db->prepare($query_prep);
@@ -169,8 +164,6 @@ class CategoryModel {
         $dbstmt->bindValue(':category', $updateCategory['category'], PDO::PARAM_STR);
         $dbstmt->bindValue(':singular_category', $updateCategory['singular_category'], PDO::PARAM_STR);
         $dbstmt->bindValue(':id_category', $categoryId, PDO::PARAM_INT);
-
-
         if ($dbstmt->execute()) {
             $db = NULL;  //Закрываем соединение
             return TRUE;
@@ -178,8 +171,6 @@ class CategoryModel {
         else {
             return FALSE;
         }
-
-
     }
 
 

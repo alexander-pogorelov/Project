@@ -14,7 +14,8 @@
 					<img src="<?php echo (file_exists(ROOT.'/Template/images/'.$product['id_product'].'_small.jpg')) ? '/Template/images/'.$product['id_product'].'_small.jpg' : '/Template/images/none_small.jpg';?>" alt=""  />
 					<a href="/product/<?php echo $product['id_product'];?>" class="name"><?php echo ($product['singular_category'] . ' ' . $product['brand']. ' ' . $product['vendor_code']); ?></a>
 					<span><?php echo number_format($product['price'], 0, '', ' ') . ' б.р.';?></span>
-					<a href="#"><img src="/Template/images/zoom.gif" alt="" width="53" height="19" /></a><a href="/cart/add/<?php echo $product['id_product'];?>"><img src="/Template/images/cart.gif" alt="" width="71" height="19" /></a>
+					<a href="#"><img src="/Template/images/zoom.gif" alt="" width="53" height="19" /></a>
+                    <a href="/"><img class="allProducts" id ="/cart/addAjax/<?php echo $product['id_product'];?>" src="/Template/images/cart.gif" alt="" width="71" height="19" /></a>
 				</div>	
 				<?php endforeach;?>
 			</div>

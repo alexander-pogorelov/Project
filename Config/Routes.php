@@ -3,83 +3,94 @@
 return array(
 
 	//Просмотр конкретного товара по id
-	'~product/([0-9]+)~' => 'product/view/$1', // actionView в ProductController
+	'product/([0-9]+)' => 'product/view/$1', // actionView в ProductController
 	
 	// Просмотр товаров по категории
-	'~category/([0-9]+)/page=([0-9]+)~' => 'site/index/$1/$2', // actionIndex в SiteController с категорией товара и номером страницы пагинации
+	'category/([0-9]+)/page=([0-9]+)' => 'site/index/$1/$2', // actionIndex в SiteController с категорией товара и номером страницы пагинации
 
 	// Просмотр товаров по категории
-	'~category/([0-9]+)~' => 'site/index/$1', // actionIndex в SiteController с категорией товара
+	'category/([0-9]+)' => 'site/index/$1', // actionIndex в SiteController с категорией товара
 
 	//Главная страница, просмотр последних добавленных товаров
-	'~^$~' => 'site/index', // actionIndex в SiteController
+	'' => 'site/index', // actionIndex в SiteController
 	//Обратная связь
-	'~contacts~' => 'site/contacts', // actionContacts в SiteController
+	'contacts' => 'site/contacts', // actionContacts в SiteController
 	
     // Админка добавление нового товара
-    '~admin/product/create~' => 'adminProduct/create',
+    'admin/product/create' => 'adminProduct/create',
 	 // Админка добавление новой категории товара
-    '~admin/category/create~' => 'adminCategory/create',
+    'admin/category/create' => 'adminCategory/create',
     // Админка добавление нового брэнда
-    '~admin/brand/create~' => 'adminBrand/create',
+    'admin/brand/create' => 'adminBrand/create',
     // Админка удаление товара
-    '~admin/product/delete/([0-9]+)~' => 'adminProduct/delete/$1',
+    'admin/product/delete/([0-9]+)' => 'adminProduct/delete/$1',
 	 // Админка удаление категории
-    '~admin/category/delete/([0-9]+)~' => 'adminCategory/delete/$1',
+    'admin/category/delete/([0-9]+)' => 'adminCategory/delete/$1',
 	// Админка удаление брэнда
-	'~admin/brand/delete/([0-9]+)~' => 'adminBrand/delete/$1',
+	'admin/brand/delete/([0-9]+)' => 'adminBrand/delete/$1',
 	// Админка изменение товара
-	'~admin/product/update/([0-9]+)~' => 'adminProduct/update/$1',
+	'admin/product/update/([0-9]+)' => 'adminProduct/update/$1',
 	// Админка изменение категории товара
-    '~admin/category/update/([0-9]+)~' => 'adminCategory/update/$1',
+    'admin/category/update/([0-9]+)' => 'adminCategory/update/$1',
     // Админка изменение брэнда товара
-    '~admin/brand/update/([0-9]+)~' => 'adminBrand/update/$1',
+    'admin/brand/update/([0-9]+)' => 'adminBrand/update/$1',
     //Админка список товаров
-    '~admin/product/page=([0-9]+)~' => 'adminProduct/index/$1', // actionIndex в AdminProductController
+    'admin/product/page=([0-9]+)' => 'adminProduct/index/$1', // actionIndex в AdminProductController
     //Админка список товаров
-    '~admin/product~' => 'adminProduct/index', // actionIndex в AdminProductController
+    'admin/product' => 'adminProduct/index', // actionIndex в AdminProductController
 	//Админка список категорий
-    '~admin/category~' => 'adminCategory/index', // actionIndex в AdminCategoryController
+    'admin/category' => 'adminCategory/index', // actionIndex в AdminCategoryController
 	//Админка список производителей
-	'~admin/brand~' => 'adminBrand/index', // actionIndex в AdminBrandController
+	'admin/brand' => 'adminBrand/index', // actionIndex в AdminBrandController
 	//Админка удаление заказов
-	'~admin/orders/delete/([0-9]+)~' => 'adminOrders/delete/$1', // actionDelete в AdminOrdersController
+	'admin/orders/delete/([0-9]+)' => 'adminOrders/delete/$1', // actionDelete в AdminOrdersController
 	//Админка просмотр заказа
-	'~admin/orders/view/([0-9]+)~' => 'adminOrders/view/$1', // actionView в AdminOrdersController
+	'admin/orders/view/([0-9]+)' => 'adminOrders/view/$1', // actionView в AdminOrdersController
 	//Админка изменение заказа
-	'~admin/orders/update/([0-9]+)~' => 'adminOrders/update/$1', // actionUpdate в AdminOrdersController
+	'admin/orders/update/([0-9]+)' => 'adminOrders/update/$1', // actionUpdate в AdminOrdersController
     //Админка список заказов
-    '~admin/orders/page=([0-9]+)~' => 'adminOrders/index/$1', // actionIndex в AdminOrdersController
+    'admin/orders/page=([0-9]+)' => 'adminOrders/index/$1', // actionIndex в AdminOrdersController
     //Админка список заказов
-    '~admin/orders~' => 'adminOrders/index', // actionIndex в AdminOrdersController
+    'admin/orders' => 'adminOrders/index', // actionIndex в AdminOrdersController
 	// Регистрация пользователей
-	'~user/registration~' => 'user/registration', // actionRegistration в UserController
+	'user/registration' => 'user/registration', // actionRegistration в UserController
 	// Авторизация на сайте
-	'~user/login~' => 'user/login', // actionLogin в UserController
+	'user/login' => 'user/login', // actionLogin в UserController
 	// Выход из авторизации
-	'~user/logout~' => 'user/logout', // actionLogin в UserController
+	'user/logout' => 'user/logout', // actionLogin в UserController
 	// Корзина добавление товара
-    '~cart/add/([0-9]+)~' => 'cart/add/$1', // actionAdd в CartController
+    'cart/add/([0-9]+)' => 'cart/add/$1', // actionAdd в CartController
+	// Корзина добавление товара AJAX
+	'cart/addajax/([0-9]+)' => 'cart/addAjax/$1', // actionAddAjax в CartController
 	// Корзина удаление товара
-    '~cart/delete/([0-9]+)~' => 'cart/delete/$1', // actionDelete в CartController
-	// Корзина удаление товара
-    '~cart/checkout~' => 'cart/checkout', // actionCheckout в CartController
+    'cart/delete/([0-9]+)' => 'cart/delete/$1', // actionDelete в CartController
+    // Корзина удаление товара AJAX
+    'cart/delajax/([0-9]+)' => 'cart/delAjax/$1', // actionDelAjax в CartController
+	// Корзина уменьшение товара
+	'cart/minus/([0-9]+)' => 'cart/minus/$1', // actionMinus в CartController
+    // Корзина уменьшение товара AJAX
+    'cart/minusajax/([0-9]+)' => 'cart/minusAjax/$1', // actionMinusAjax в CartController
+	// Корзина увеличение товара
+	//'cart/plus/([0-9]+)' => 'cart/plus/$1', // actionPlus в CartController
+	// Корзина оформление заказа
+    'cart/checkout' => 'cart/checkout', // actionCheckout в CartController
 	// Корзина
-    '~cart~' => 'cart/index', // actionIndex в CartController
+    'cart' => 'cart/index', // actionIndex в CartController
 	
 	// Редактирование личных данных пользователя
-	'~cabinet/edit~' => 'cabinet/edit', // actionEdit в CabinetController
+	'cabinet/edit' => 'cabinet/edit', // actionEdit в CabinetController
 	// Смена пароля пользователя
-	'~cabinet/pass~' => 'cabinet/pass', // actionPass в CabinetController
+	'cabinet/pass' => 'cabinet/pass', // actionPass в CabinetController
     // Просмотр заказа пользователем
-    '~cabinet/order/([0-9]+)~' => 'cabinet/order/$1', // actionOrder в CabinetController
+    'cabinet/order/([0-9]+)' => 'cabinet/order/$1', // actionOrder в CabinetController
 	// Просмотр заказов пользователя
-	'~cabinet/orders~' => 'cabinet/orders', // actionOrders в CabinetController
+	'cabinet/orders' => 'cabinet/orders', // actionOrders в CabinetController
 		// Личный кабинет пользователя
-	'~cabinet~' => 'cabinet/index', // actionIndex в CabinetController
+	'cabinet' => 'cabinet/index', // actionIndex в CabinetController
+
 	
     // Админка главная страница
-	'~admin~' => 'admin/index' // actionIndex в AdminController
+	'admin' => 'admin/index' // actionIndex в AdminController
 
 );
 

@@ -543,3 +543,9 @@ tr:hover td {
 .red {
     color: red;
 }
+
+.allProducts:active {
+    /*border: 2px solid black;*/
+    /*padding-right: 2%;*/
+    height: 22px;
+}

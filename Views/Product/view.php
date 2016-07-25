@@ -37,8 +37,9 @@
 						<li><span>Seddiam</span>1234</li>
 						<li class="color"><span>Nonumy eirmod</span>1234</li>
 					</ul>
+					<br>
 					<?php if (!$productItem['product_arh'] && (!$productItem['category_arh'])): ?>
-						<a href="/cart/add/<?php echo $productItem['id_product'];?>"><button>Add to Cart</button></a><img src="/Template/images/carts.gif" alt="" width="16" height="24" class="carts" />
+						<a href="/"><img src="/Template/images/button-3182.png" alt="" class="allProducts" id="/cart/addAjax/<?php echo $productItem['id_product'];?>"/><img src="/Template/images/carts.gif" alt="" class="allProducts" id="<?php echo $productItem['id_product'];?>"/></a>
 					<?php endif;?>
 				</div>
 			</div>
@@ -49,7 +50,8 @@
 					<img src="<?php echo (file_exists(ROOT.'/Template/images/'.$similarProductItem['id_product'].'_small.jpg')) ? '/Template/images/'.$similarProductItem['id_product'].'_small.jpg' : '/Template/images/none_small.jpg';?>" alt="" width="" height="" />
 					<a href="/product/<?php echo $similarProductItem['id_product'];?>" class="name"><?php echo $similarProductItem['singular_category'] . ' ' .$similarProductItem['brand'] . ' ' . $similarProductItem['vendor_code'];?></a>
 					<span><?php echo number_format($similarProductItem['price'], 0, '', ' ') . ' б.р.';?></span>
-					<a href="#"><img src="/Template/images/zoom.gif" alt="" width="53" height="19" /></a><a href="/cart/add/<?php echo $similarProductItem['id_product'];?>"><img src="/Template/images/cart.gif" alt="" width="71" height="19" /></a>
+					<a href="/"><img src="/Template/images/zoom.gif" alt="" width="53" height="19" /></a>
+					<a href="/"><img class="allProducts" id ="/cart/addAjax/<?php echo $similarProductItem['id_product'];?>" src="/Template/images/cart.gif" alt="" width="71" height="19" /></a>
 				</div>
                 <?php endforeach; ?>
 			</div>
